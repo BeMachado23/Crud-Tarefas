@@ -14,15 +14,16 @@ export default function Home() {
         if(participants.includes(participantName)){
             return Alert.alert('Participante existe', 'Já existe o participante cadastrado!')
         }
+        setParticipants(prevState => [...prevState,participantName])
         //return Alert.alert("Participante Cadastrado","Participante cadastrado com sucesso!")
-        setParticipants(prevState => [...prevState, participantName]);
+        setParticipantsCount(prevCount => prevCount +1);
 
         //limpar o campo - precisa alterar no value do TextInput
         setParticipantName('');
 
     }
     
-    function handleParticipantRemov(name: string){
+    function handleParticipantRemove(name: string){
         //return console.log(participants.filter(participant => participant !== name));
         
         
@@ -62,7 +63,9 @@ export default function Home() {
             </TouchableOpacity>
         </View>
         <View style={{ display: 'flex', flexDirection: 'row', marginBottom: 8, justifyContent: 'space-evenly', alignItems: 'flex-start' }}>
-             <Text style={styles.textTask}>Criadas {participantsCount}</Text>
+             
+        <Text style={styles.textTask}>Criadas <View style = {{paddingHorizontal:8, backgroundColor: '#333333', borderRadius: 10}}><Text style={{color:'white'}}>{participantsCount}</Text></View></Text>
+
                 <Text style={styles.textTask2}>Concluídas</Text>
             </View>
 
@@ -76,11 +79,14 @@ export default function Home() {
                 key={item}
                 name= {item}
                 onRemove={() => handleParticipantRemove(item)}
+        
             />
             )}
             showsVerticalScrollIndicator= {false}
             ListEmptyComponent={() => (
+                
                 <View style={{display: 'flex', alignItems:'center', justifyContent:'center'}}>
+                    <View><Image source= {require('../../../assets/LIST.png')}style = {{alignItems: 'center', resizeMode:'contain',top: 0, justifyContent:'center', height:50 , width:290, marginBottom:20 }}/></View>
                     <Text style={{color: '#797979', fontSize: 14, textAlign: 'center', fontWeight: 'bold'}}>
                         Você ainda não tem tarefas cadastradas
                     </Text>
